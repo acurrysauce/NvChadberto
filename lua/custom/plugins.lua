@@ -34,6 +34,23 @@ local plugins = {
   },
   {
     "mfussenegger/nvim-dap",
+  },
+  {
+    "saecki/crates.nvim",
+    ft = {"rust", "toml"},
+    config = function(_, opts)
+      local crates = require('crates')
+      crates.setup(opts)
+      crates.show()
+    end,
+  },
+  {
+    "hrsh7th/nvim-cmp", -- even though this is part of core - we can still include it
+    opts = function()
+      local M = require "plugins.configs.cmp" -- get the core cmp config
+      table.insert(M.sources, {name = "crates"}) -- add crates to the sources
+      return M -- return the config back to cmp
+    end,
   }
 }
 return plugins
